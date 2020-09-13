@@ -38,7 +38,7 @@ class User
      * @param string $password
      * @param Role $role
      */
-    public function __construct(
+    public function n__construct(
         int $id,
         string $name,
         string $login,
