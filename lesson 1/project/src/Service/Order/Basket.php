@@ -18,6 +18,7 @@ use Service\Discount\NullObject;
 use Service\User\SecurityInterface;
 use Service\User\Security;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use function mysql_xdevapi\getSession;
 
 class Basket
 {
@@ -31,12 +32,22 @@ class Basket
      */
     private $session;
 
+    private $billing;
+    private $discount;
+    private $communication;
+    private $security;
+
     /**
      * @param SessionInterface $session
      */
-    public function __construct(SessionInterface $session)
+    public function __construct(BasketBuilder $basketBuilder)
     {
-        $this->session = $session;
+        $this->session = $basketBuilder->getSession();
+        $this->billing = $basketBuilder->getBilling();
+        $this->discount = $basketBuilder->getDiscount();
+        $this->communication = $basketBuilder->getCommunication();
+        $this->security = $basketBuilder->getSecurity();
+
     }
 
     /**
@@ -91,22 +102,31 @@ class Basket
      * @throws BillingException
      * @throws CommunicationException
      */
-    public function checkout(): void
+    public function checkout(
+        Card $card,
+        NullObject $discount,
+        Email $email,
+        Security $security
+    )
     {
+        $basketBuilder = new BasketBuilder();
         // Здесь должна быть некоторая логика выбора способа платежа
-        $billing = new Card();
+        $basketBuilder->setBilling($card);
 
         // Здесь должна быть некоторая логика получения информации о скидке
         // пользователя
-        $discount = new NullObject();
+        $basketBuilder->setDiscount($discount);
 
         // Здесь должна быть некоторая логика получения способа уведомления
         // пользователя о покупке
-        $communication = new Email();
+        $basketBuilder->setCommunication($email);
 
-        $security = new Security($this->session);
+        $basketBuilder->setSecurity($security);
+        $basket = $basketBuilder->build();
+        $foo = new CheckoutProcess();
+        $foo->checkoutProcess($basket);
 
-        $this->checkoutProcess($discount, $billing, $security, $communication);
+//        $this->checkoutProcess($discount, $billing, $security, $communication);
     }
 
     /**
