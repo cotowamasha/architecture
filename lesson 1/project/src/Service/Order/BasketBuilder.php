@@ -19,6 +19,7 @@ class BasketBuilder
 
     public function setBilling (Card $card) {
         $this->billing = $card;
+        return $this;
     }
     public function getBilling () {
         return $this->billing;
@@ -26,6 +27,7 @@ class BasketBuilder
 
     public function setDiscount (NullObject $discount) {
         $this->discount = $discount;
+        return $this;
     }
     public function getDiscount () {
         return $this->discount;
@@ -33,6 +35,7 @@ class BasketBuilder
 
     public function setCommunication (Email $email) {
         $this->communication = $email;
+        return $this;
     }
     public function getCommunication () {
         return $this->communication;
@@ -40,6 +43,7 @@ class BasketBuilder
 
     public function setSecurity (Security $security) {
         $this->security = $security;
+        return $this;
     }
     public function getSecurity () {
         return $this->security;
@@ -50,6 +54,7 @@ class BasketBuilder
     }
     public function setSession (SessionInterface $session){
         $this->session = $session;
+        return $this;
     }
 
     public function build(): Basket
