@@ -40,6 +40,14 @@ class Product
     {
         return $this->id;
     }
+    /**
+     * task 2
+     */
+
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
 
     /**
      * @return string
@@ -49,12 +57,22 @@ class Product
         return $this->name;
     }
 
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
     /**
      * @return float
      */
     public function getPrice(): float
     {
         return $this->price;
+    }
+
+    public function setPrice($price)
+    {
+        $this->price = $price;
     }
 
     /**
@@ -67,5 +85,10 @@ class Product
             'name' => $this->name,
             'price' => $this->price,
         ];
+    }
+
+    public function __clone()
+    {
+        // TODO: Implement __clone() method.
     }
 }

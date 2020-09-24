@@ -18,14 +18,18 @@ class ProductRepository
         if (!count($ids)) {
             return [];
         }
-
+        /**
+         * task 2
+         */
+        $product = new Product('', '', '');
         $productList = [];
         foreach ($this->getDataFromSource(['id' => $ids]) as $item) {
-            $productList[] = new Product(
-                $item['id'],
-                $item['name'],
-                $item['price']
-            );
+            $productIter = clone $product;
+            $productIter->setId($item['id']);
+            $productIter->setName($item['name']);
+            $productIter->setPrice($item['price']);
+
+            $productList[] = $productIter;
         }
 
         return $productList;
@@ -37,13 +41,18 @@ class ProductRepository
      */
     public function fetchAll(): array
     {
+        /**
+         * task 2
+         */
+        $product = new Product('', '', '');
         $productList = [];
         foreach ($this->getDataFromSource() as $item) {
-            $productList[] = new Product(
-                $item['id'],
-                $item['name'],
-                $item['price']
-            );
+            $productIter = clone $product;
+            $productIter->setId($item['id']);
+            $productIter->setName($item['name']);
+            $productIter->setPrice($item['price']);
+
+            $productList[] = $productIter;
         }
 
         return $productList;
