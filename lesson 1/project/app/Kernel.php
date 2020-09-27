@@ -39,8 +39,11 @@ class Kernel
      */
     public function handle(Request $request): Response
     {
-        $this->registerConfigs();
-        $this->registerRoutes();
+//        $this->registerConfigs();
+//        $this->registerRoutes();
+
+        (new RegisterConfigCommand())->execute();
+        (new RegisterRoutedCommand())->execute();
 
         return $this->process($request);
     }

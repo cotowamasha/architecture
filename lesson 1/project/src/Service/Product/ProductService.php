@@ -30,9 +30,16 @@ class ProductService
     {
         $productList = $this->getProductRepository()->fetchAll();
 
-        // Применить паттерн Стратегия
-        // $sortType === 'price'; // Сортировка по цене
-        // $sortType === 'name'; // Сортировка по имени
+        /**
+         * task2
+         */
+
+        $collection = new \ProductCollection();
+        if ($sortType == 'price') {
+            $productList = $collection->sort(new \PriceComparator(), $productList);
+        } elseif ($sortType == 'name') {
+            $productList = $collection->sort(new \NameComparator(), $productList);
+        }
 
         return $productList;
     }
